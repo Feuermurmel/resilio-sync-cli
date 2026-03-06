@@ -72,10 +72,14 @@ def rescan_command(base_url: str, local_path: Path) -> None:
         )
 
         if id is None:
+            paths_str = "\n".join(
+                sorted(f"- {i}" for i in folder_paths_by_ids.values())
+            )
+
             raise UserError(
                 f'No synced folder found containing path "{local_path}".\n'
                 f"Synced folders:\n"
-                f"{'\n'.join(sorted(f'- {i}' for i in folder_paths_by_ids.values()))}"
+                f"{paths_str}"
             )
 
         logging.info(f'Re-scanning folder "{folder_paths_by_ids[id]}" with ID {id}.')
